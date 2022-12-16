@@ -324,7 +324,7 @@ export class LotteryComponent implements OnInit {
     //setTimeout( ()=>{const spinner = document.getElementById('spinner-super-wrapper'); if(spinner) { spinner.style.display = 'none'; } } , 5000)
   }
   
-  ngOndestroy() {
+  ngOnDestroy() {
     console.log('Lottery destroy');
     window.clearInterval(this.intervalUpdatePage);
   }

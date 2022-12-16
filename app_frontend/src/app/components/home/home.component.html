@@ -2,7 +2,17 @@
   <h2>List of Current Live Sales</h2>
   <div class="row row-cols-auto">
     <div *ngFor="let sale of sales" class="sale-list-item">
-      <h3 class="mt-3">{{ sale.name_of_sale }}</h3>
+      <h3 class="mt-3">
+        <a
+          routerLinkActive="active"
+          routerLink="sale/{{
+            (sale.type_of_sale == 'auction' ? 'auction' : 'lottery') +
+              '/' +
+              sale.sale_contract_addr
+          }}"
+          >{{ sale.name_of_sale }}</a
+        >
+      </h3>
       <div>
         <img class="sale-image" mx-auto src="{{ sale.image_ipfs_url }}" />
       </div>
