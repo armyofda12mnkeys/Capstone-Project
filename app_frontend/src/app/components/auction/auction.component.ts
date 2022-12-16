@@ -35,6 +35,7 @@ export class AuctionComponent implements OnInit {
   highestBidder: string | undefined ; 
   closingTime: number | undefined; 
   closingTimeDateLocalized: Date | undefined;
+  nft_address: string | undefined ; 
   paymentToken: string | undefined;
   tokenBalanceOfUser: number | undefined;
   tokenBalanceOfUserSmallerUnits:  number | undefined;
@@ -107,7 +108,7 @@ export class AuctionComponent implements OnInit {
                 this.closeAuctionUI = false;
               }
               
-
+              this.nft_address = x.nft;
               this.paymentToken = x.paymentToken;
               let saleTokenContract;
               if (this.provider && this.paymentToken) { //only need signer for finding your balance vs contract's balance
@@ -196,7 +197,7 @@ export class AuctionComponent implements OnInit {
           this.closeAuctionUI = false;
         }
 
-        //*
+        this.nft_address = x.nft;
         this.paymentToken = x.paymentToken;
         if (this.provider && this.paymentToken) { //only need signer for finding your balance vs contract's balance
           const saleTokenContract = ContractService.getContract(this.provider, this.signer, saleTokenInterface.abi, this.paymentToken, bySigner);
@@ -218,7 +219,6 @@ export class AuctionComponent implements OnInit {
             }                  
           }
         }
-        //*/
 
       });
       //any on events needed here?

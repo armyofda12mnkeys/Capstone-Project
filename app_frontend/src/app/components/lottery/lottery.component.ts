@@ -37,6 +37,7 @@ export class LotteryComponent implements OnInit {
   closingTimeDateLocalized: Date | undefined;
   ownerPool: number | undefined;
   ownerPool4UI: string| undefined ; //getting from blockchain to test
+  nft_address: string | undefined ;
   paymentToken: string | undefined;
   tokenBalanceOfUser: number | undefined;
   tokenBalanceOfUserSmallerUnits:  number | undefined;
@@ -108,7 +109,8 @@ export class LotteryComponent implements OnInit {
               } else {
                 this.closeLotteryUI = false;
               }
-                            
+              
+              this.nft_address = x.nft;
               this.paymentToken = x.paymentToken;
               let saleTokenContract;
               if (this.provider && this.paymentToken) { //only need signer for finding your balance vs contract's balance
@@ -197,7 +199,7 @@ export class LotteryComponent implements OnInit {
           this.closeLotteryUI = false;
         }
 
-        //*
+        this.nft_address = x.nft;
         this.paymentToken = x.paymentToken;
         if (this.provider && this.paymentToken) { //only need signer for finding your balance vs contract's balance
           const saleTokenContract = ContractService.getContract(this.provider, this.signer, saleTokenInterface.abi, this.paymentToken, bySigner);
@@ -219,7 +221,6 @@ export class LotteryComponent implements OnInit {
             }                  
           }
         }
-        //*/
 
       });
       //any on events needed here?

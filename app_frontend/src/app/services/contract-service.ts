@@ -110,6 +110,8 @@ export class ContractService {
     const lotteryClosingTime = await lotteryContract['lotteryClosingTime'](); //number
     const ownerPool = await lotteryContract['ownerPool'](); //number
     const paymentToken = await lotteryContract['paymentToken'](); //string
+    const nft = await lotteryContract['nft'](); //NFT ERC721 maybe has nft minter address?
+    
     let saleWinner = '';
     if(!betsOpen) {
       try {
@@ -119,7 +121,7 @@ export class ContractService {
       }
     }
 
-    return { saleOwner, betsOpen, betPrice, lotteryClosingTime, ownerPool, paymentToken, saleWinner };
+    return { saleOwner, betsOpen, betPrice, lotteryClosingTime, ownerPool, paymentToken, saleWinner, nft };
     //return { betsOpen, betPrice, lotteryClosingTime, ownerPool, paymentToken };
   }
   public async getAuctionInfoGeneral(auctionContract:ethers.Contract ){
@@ -129,6 +131,8 @@ export class ContractService {
     const auctionClosingTime = await auctionContract['auctionClosingTime'](); //number
     const auctionOpen = await auctionContract['auctionOpen'](); //number
     const paymentToken = await auctionContract['paymentToken'](); //string
+    const nft = await auctionContract['nft'](); //NFT ERC721 maybe has nft minter address?
+
     let saleWinner = '';
     if(!auctionOpen) {
       try {
@@ -138,7 +142,7 @@ export class ContractService {
       }
     }
 
-    return { saleOwner, highestBid, highestBidder, auctionClosingTime, auctionOpen, paymentToken, saleWinner };
+    return { saleOwner, highestBid, highestBidder, auctionClosingTime, auctionOpen, paymentToken, saleWinner, nft };
     //return { highestBid, highestBidder, auctionClosingTime, auctionOpen, paymentToken };
   }
   public async postLotteryBet(lotteryContract:ethers.Contract, lotteryTokenContract:ethers.Contract, bet_price:number ){
