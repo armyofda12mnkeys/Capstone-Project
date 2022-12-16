@@ -42,6 +42,10 @@ export class CreateSaleComponent {
   walletAddress: string | undefined;
 
   created_contract_addr: string | undefined;
+  ipfs_json_metadata_hash: string | undefined;
+  ipfs_json_metadata_url: string | undefined;
+  ipfs_image_hash: string | undefined;
+  ipfs_image_url: string | undefined;
 
   constructor(
     private httpClient: HttpClient,
@@ -243,7 +247,11 @@ export class CreateSaleComponent {
                       console.log('########################## SaleCreated() emitted solidty event')
                       console.log('new_contract_addr:',new_contract_addr,',sale_type:', sale_type, ',saleOwner:', saleOwner, ',nftJsonURI:', uri);
                       this.created_contract_addr = new_contract_addr;
-                      
+                      this.ipfs_json_metadata_hash = ipfs_json_meta_hash;
+                      this.ipfs_json_metadata_url = ipfs_nft_meta_url;
+                      this.ipfs_image_hash = ipfs_image_hash;
+                      this.ipfs_image_url = ipfs_image_url;
+
                       this.hideModal();
                       this.writeToDB(new_contract_addr, lottery_type, {'sale_name': sale_name, 'sale_desc': sale_desc, 'bet_price':      bet_price,  'payment_token': payment_token, 'ipfs_image_hash': ipfs_image_hash, 'ipfs_image_url': ipfs_image_url, 'ipfs_nft_meta_url': ipfs_nft_meta_url, 'recipient_addr': recipient_addr, 'recipient_desc': recipient_desc, 'recipient_link': recipient_link, 'converted_to_seconds_after_epoch': converted_to_seconds_after_epoch, 'date_time_as_date': date_time_as_date});
                       salesContract.removeAllListeners("SaleCreated"); //maybe put this in destroy method, not usre
@@ -268,6 +276,10 @@ export class CreateSaleComponent {
                       console.log('########################## SaleCreated() emitted solidty event')
                       console.log('new_contract_addr:',new_contract_addr,',sale_type:', sale_type, ',saleOwner:', saleOwner, ',nftJsonURI:', uri);
                       this.created_contract_addr = new_contract_addr;
+                      this.ipfs_json_metadata_hash = ipfs_json_meta_hash;
+                      this.ipfs_json_metadata_url = ipfs_nft_meta_url;
+                      this.ipfs_image_hash = ipfs_image_hash;
+                      this.ipfs_image_url = ipfs_image_url;
 
                       this.hideModal();
                       this.writeToDB(new_contract_addr, lottery_type, {'sale_name': sale_name, 'sale_desc': sale_desc, 'starting_bid': starting_bid, 'payment_token': payment_token, 'ipfs_image_hash': ipfs_image_hash, 'ipfs_image_url': ipfs_image_url, 'ipfs_nft_meta_url': ipfs_nft_meta_url, 'recipient_addr': recipient_addr, 'recipient_desc': recipient_desc, 'recipient_link': recipient_link, 'converted_to_seconds_after_epoch': converted_to_seconds_after_epoch, 'date_time_as_date': date_time_as_date});
@@ -400,7 +412,7 @@ export class CreateSaleComponent {
     
     async writeToDB(new_contract_addr:string, lottery_type:string, obj:any) {
       console.log('writeToDB');
-
+      return; //uncomment if get db up again
 
       //this.writeToDB(new_contract_addr, lottery_type, {'sale_name': sale_name, 'sale_desc': sale_desc, 'bet_price':      bet_price,  'payment_token': payment_token, 'ipfs_image_hash': ipfs_image_hash, 'ipfs_image_url': ipfs_image_url, 'ipfs_nft_meta_url': ipfs_nft_meta_url, 'recipient_addr': recipient_addr, 'recipient_desc': recipient_desc, 'recipient_link': recipient_link, 'converted_to_seconds_after_epoch': converted_to_seconds_after_epoch, 'date_time_as_date': date_time_as_date});
       //this.writeToDB(new_contract_addr, lottery_type, {'sale_name': sale_name, 'sale_desc': sale_desc, 'starting_bid': starting_bid, 'payment_token': payment_token, 'ipfs_image_hash': ipfs_image_hash, 'ipfs_image_url': ipfs_image_url, 'ipfs_nft_meta_url': ipfs_nft_meta_url, 'recipient_addr': recipient_addr, 'recipient_desc': recipient_desc, 'recipient_link': recipient_link, 'converted_to_seconds_after_epoch': converted_to_seconds_after_epoch, 'date_time_as_date': date_time_as_date});

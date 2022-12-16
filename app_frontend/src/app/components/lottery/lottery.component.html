@@ -13,14 +13,22 @@
   </div>
   <div class="mb-3">
     <div>Charity Address: {{ recipient_addr }}</div>
-    <div *ngIf="recipient_link">Charity Link: <a href="{{recipient_link}}">{{ recipient_link }}</a></div>
-    <div *ngIf="recipient_desc">Charity Description:<br /> <p class="mt-2">{{ recipient_desc }}</p></div>
+    <div *ngIf="recipient_link">
+      Charity Link: <a href="{{ recipient_link }}">{{ recipient_link }}</a>
+    </div>
+    <div *ngIf="recipient_desc">
+      Charity Description:<br />
+      {{ recipient_desc }}
+    </div>
   </div>
   <div class="mb-3">
     Lottery state is:
     <span [ngClass]="betsOpen ? 'color-success' : 'color-error'">{{
       betsOpen ? "Open" : "Closed"
     }}</span>
+    <span *ngIf="closeLotteryUI" class="color-error"
+      >(but can be Closed since date is passed)</span
+    >
     <div *ngIf="closeLotteryUI">
       <span *ngIf="!signer"
         >Please Connect your Wallet to Close the Lottery</span

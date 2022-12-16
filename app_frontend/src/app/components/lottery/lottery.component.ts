@@ -12,6 +12,7 @@ import saleTokenInterface  from '../../../assets/IERC20.json';
 import { BigNumber, Contract, ethers } from 'ethers';
 import { environment } from 'src/environments/environment';
 import axios from 'axios';
+import { SalesMongoService } from 'src/app/services/sales-mongo-service';
 
 @Component({
   selector: 'app-lottery',
@@ -56,7 +57,8 @@ export class LotteryComponent implements OnInit {
     private location: Location,
     //private salesContractService: SalesContractService,
     private walletInjectorService: WalletInjectorService,
-    private contractService: ContractService
+    private contractService: ContractService,
+    private salesMongoService: SalesMongoService
   ) {}
   
   async ngOnInit() { //made async and removed :void
@@ -135,7 +137,7 @@ export class LotteryComponent implements OnInit {
             //{ betsOpen, betPrice, lotteryClosingTime, ownerPool, paymentToken, lotteryTokenBalance, lotteryTokenBalanceOfContract };
         }
 
-        this.intervalUpdatePage = window.setInterval( ()=>{this.updatePage();} , 1000);
+        this.intervalUpdatePage = window.setInterval( ()=>{this.updatePage();} , 60000);
       }
     });
     /* alternate way of getting param from url
@@ -277,7 +279,24 @@ export class LotteryComponent implements OnInit {
     }
   }
 
-  async getInfoFromMongoDB(){
+  async getMockInfoFromMongoDB(): Promise<any>{
+    const sales = await this.salesMongoService.getRealSalesFromMongoDB();
+    const match_result = sales.find((element:any)=>{
+      const is_match = (element.sale_contract_addr == this.contract_addr);
+      return is_match;
+    });
+    return match_result;
+  }
+  async getInfoFromMongoDB(){    
+    const mock_response = await this.getMockInfoFromMongoDB();
+    if (!mock_response){ alert('No contract found in DB'); };
+    this.previewImage   = mock_response.image_ipfs_url; 
+    this.recipient_addr = mock_response.recipient.recipient_addr;
+    this.recipient_link = mock_response.recipient.recipient_link;
+    this.recipient_desc = mock_response.recipient.recipient_desc;
+
+    //re-add later if get DB up again
+    /*
     const response = await axios({
       method: "get",
       url: environment.base_api_url + "/sales/"+ this.contract_addr,
@@ -290,10 +309,7 @@ export class LotteryComponent implements OnInit {
     this.recipient_addr = response.data.recipient.recipient_addr;
     this.recipient_link = response.data.recipient.recipient_link;
     this.recipient_desc = response.data.recipient.recipient_desc;
-
-    //console.log(response.data.image_ipfs_url);
-    //console.log(response[0].name_of_sale);
-    //return response.data.image_ipfs_url;
+    */
   }
 
   showModal(){

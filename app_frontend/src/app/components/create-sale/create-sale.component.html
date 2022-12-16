@@ -14,6 +14,10 @@
       }}"
       >{{ created_contract_addr }}</a
     >
+    {{ ipfs_json_metadata_hash }}<br />
+    <a href="{{ ipfs_json_metadata_url }}">MetaData url</a><br />
+    {{ ipfs_image_hash }}<br />
+    <a href="{{ ipfs_image_url }}">MetaData image</a><br />
   </div>
   <div *ngIf="signer && !created_contract_addr">
     <form id="saleForm" [formGroup]="saleForm" (ngSubmit)="onSubmit(this)">

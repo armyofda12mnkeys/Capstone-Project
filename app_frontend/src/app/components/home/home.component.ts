@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import axios, { AxiosPromise, AxiosResponse } from 'axios';
+import { ContractService } from 'src/app/services/contract-service';
 import { environment } from 'src/environments/environment';
 
 import { SalesMongoService} from '../../services/sales-mongo-service';
@@ -36,11 +37,15 @@ export class HomeComponent implements OnInit {
   public sales: any;
   public showModal: boolean = false;
 
-  constructor(private salesMongoService: SalesMongoService) { }
+  constructor(private salesMongoService: SalesMongoService, private contractService: ContractService) { }
 
   async ngOnInit() {    
     const sales = await this.salesMongoService.getRealSalesFromMongoDB(); //add await here later as it'll prob become a promise
     this.sales = sales;
+    //get highestBid from Blockchain
+    //const salesContract = ContractService.getContract(this.provider, this.signer, salesFactoryInterface.abi, environment.salesFactoryContractAddress, true);
+    //this.contractService.launchLottery(salesContract, bet_price, payment_token, ipfs_nft_meta_url, recipient_addr, converted_to_seconds_after_epoch);
+
   }
 
 }
